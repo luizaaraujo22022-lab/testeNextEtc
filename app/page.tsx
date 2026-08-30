@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Trash2, Plus, CheckCircle2, Circle, Tag, DollarSign } from 'lucide-react';
+import { ShoppingBag, Plus, Tag, DollarSign } from 'lucide-react';
+import { ItemCard } from './components/ItemCard';
 
 interface Item {
   id: number;
@@ -68,9 +69,7 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <ShoppingBag className="w-6 h-6 text-indigo-400" />
-              <h1 className="text-2xl font-bold text-white">
-                Lista de Compras
-              </h1>
+              <h1 className="text-2xl font-bold text-white">Lista de Compras</h1>
             </div>
             <p className="text-xs text-slate-400">
               Total gasto: <strong className="text-emerald-400 font-semibold text-sm">R$ {totalGasto.toFixed(2)}</strong>
@@ -125,41 +124,15 @@ export default function Home() {
           </button>
         </form>
 
-        {/* Lista de Itens */}
+        {/* Lista mapeando o componente desacoplado */}
         <ul className="space-y-2.5 max-h-[350px] overflow-y-auto pr-1">
           {itens.map((item) => (
-            <li
+            <ItemCard
               key={item.id}
-              className="flex justify-between items-center p-3.5 bg-slate-900/60 hover:bg-slate-900 border border-slate-700/60 rounded-xl transition"
-            >
-              <div
-                onClick={() => alternarConcluido(item.id)}
-                className="flex items-center gap-3 cursor-pointer select-none"
-              >
-                {item.concluido ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-                ) : (
-                  <Circle className="w-5 h-5 text-slate-500 shrink-0 hover:text-indigo-400" />
-                )}
-                <div>
-                  <span
-                    className={`block font-medium text-sm ${item.concluido ? 'line-through text-slate-500' : 'text-slate-200'
-                      }`}
-                  >
-                    {item.nome}
-                  </span>
-                  <span className="text-[11px] text-slate-400">
-                    {item.categoria} • R$ {item.valor.toFixed(2)}
-                  </span>
-                </div>
-              </div>
-              <button
-                onClick={() => removerItem(item.id)}
-                className="text-slate-500 hover:text-rose-400 p-1 rounded-lg hover:bg-rose-500/10 transition"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </li>
+              item={item}
+              onAlternar={alternarConcluido}
+              onRemover={removerItem}
+            />
           ))}
         </ul>
 
