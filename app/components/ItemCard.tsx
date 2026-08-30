@@ -36,7 +36,7 @@ export function ItemCard({ item, onAlternar, onRemover }: ItemCardProps) {
                         {item.nome}
                     </span>
                     <span className="text-[11px] text-slate-400">
-                        {item.categoria} • R$ {item.valor.toFixed(2)}
+                        {item.categoria} {item.valor > 0 && `• R$ ${item.valor.toFixed(2)}`}
                     </span>
                 </div>
             </div>
